@@ -49,3 +49,11 @@ const server = http.createServer((req, res) => {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log('Serveur démarré sur port ' + PORT));
+// Ping automatique toutes les 10 minutes pour rester éveillé
+setInterval(() => {
+  http.get('http://localhost:' + PORT + '/signal', (res) => {
+    console.log('Auto-ping OK - ' + new Date().toLocaleTimeString());
+  }).on('error', (e) => {
+    console.log('Ping error:', e.message);
+  });
+}, 600000);
