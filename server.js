@@ -19,6 +19,12 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify({ key: process.env.TWELVE_API_KEY || '' }));
     return;
   }
+  
+  if (req.method === 'GET' && req.url === '/telegramtoken') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ token: process.env.TELEGRAM_TOKEN || '' }));
+    return;
+}
 
   if (req.method === 'POST' && req.url === '/signal') {
     let body = '';
